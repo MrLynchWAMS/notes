@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8th Grade Science: Classifying Matter Notes Helper</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbars for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        
+        .pulse-subtle {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(59, 130, 246, 0.4); }
+            50% { border-color: rgba(59, 130, 246, 1); }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="bg-blue-600 text-white p-2.5 rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center">
+                <i class="fa-solid fa-atom text-xl"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="bg-blue-500/10 text-blue-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-500/20">8th Grade Physical Science</span>
+                    <span class="bg-emerald-500/10 text-emerald-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/20"><i class="fa-solid fa-check text-[10px] mr-1"></i>Dynalist Ready</span>
+                </div>
+                <h1 class="text-lg sm:text-xl font-bold text-white tracking-tight">Classifying Matter: Identification Flow Chart</h1>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+            <a href="https://dynalist.io" target="_blank" rel="noopener text-xs sm:text-sm font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-lg border border-slate-700 transition flex items-center gap-2">
+                <span>Open Blank Dynalist</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400"></i>
+            </a>
+            <button onclick="toggleInstructionsModal()" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5 sm:hidden">
+                <i class="fa-solid fa-circle-question text-blue-400"></i>
+                <span>Help</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Split View Area -->
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 p-4 sm:p-6 max-w-[1920px] w-full mx-auto">
+        
+        <!-- LEFT PANEL: Instructions & Copy Logic (5 Cols) -->
+        <section class="lg:col-span-5 flex flex-col gap-5">
+            
+            <!-- Quick Action Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-amber-400"></i>
+                        <span>One-Click Notes Copy</span>
+                    </h2>
+                    <span id="os-badge" class="text-[11px] bg-slate-800 text-slate-400 px-2 py-1 rounded font-mono border border-slate-700">Detecting OS...</span>
+                </div>
+
+                <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                    Click below to copy formatted notes with exact tab spacing and color tags directly to your clipboard.
+                </p>
+
+                <!-- Big Copy Button -->
+                <button id="copyBtn" onclick="copyNotesToClipboard()" class="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold py-3.5 px-5 rounded-xl shadow-lg shadow-blue-600/30 transition duration-150 flex items-center justify-center gap-3 group text-sm sm:text-base cursor-pointer border border-blue-400/30">
+                    <i class="fa-regular fa-copy text-lg group-hover:scale-110 transition-transform"></i>
+                    <span>Copy Notes to Clipboard</span>
+                </button>
+
+                <!-- Success Toast Message -->
+                <div id="copySuccessMsg" class="hidden mt-3 p-3 bg-emerald-500/15 border border-emerald-500/30 rounded-xl text-emerald-300 text-xs sm:text-sm font-medium flex items-start gap-2.5 animate-fadeIn">
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-base mt-0.5"></i>
+                    <div>
+                        <span class="font-bold">✅ Notes Copied Successfully!</span>
+                        <p class="text-emerald-400/90 text-xs mt-0.5">Now click inside your Dynalist journal bullet and press <strong id="paste-shortcut-key" class="bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-600/40 font-mono text-white">Ctrl + V</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual 3-Step Student Guide -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-blue-400"></i>
+                        <span>How to Add Notes to Your Science Journal</span>
+                    </h2>
+
+                    <div class="space-y-4">
+                        <!-- Step 1 -->
+                        <div id="step-card-1" class="flex gap-3.5 p-3 rounded-xl border border-blue-500/30 bg-blue-950/20 transition-all">
+                            <div class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-md">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-white uppercase tracking-wider">Step 1: Copy</h3>
+                                <p class="text-xs text-slate-300 mt-0.5">Click the big blue <span class="text-blue-400 font-semibold">"Copy Notes to Clipboard"</span> button above.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div id="step-card-2" class="flex gap-3.5 p-3 rounded-xl border border-slate-800 bg-slate-950/40 transition-all">
+                            <div class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center flex-shrink-0 border border-slate-700">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Step 2: Open Journal</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">
+                                    Open your Dynalist Science Journal tab and click on an empty bullet line where you want the notes to start.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div id="step-card-3" class="flex gap-3.5 p-3 rounded-xl border border-slate-800 bg-slate-950/40 transition-all">
+                            <div class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center flex-shrink-0 border border-slate-700">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Step 3: Paste</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">
+                                    Press <kbd id="kbd-shortcut-display" class="bg-slate-800 px-1.5 py-0.5 rounded text-amber-300 font-mono text-[11px] border border-slate-700">Ctrl + V</kbd> to paste. All tabs, indentation, and color tags will format automatically!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Test Box for Students -->
+                <div class="mt-5 pt-4 border-t border-slate-800">
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="paste-tester" class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-vial-circle-check text-emerald-400"></i>
+                            <span>Test Your Paste Here First (Optional):</span>
+                        </label>
+                        <button onclick="clearTestSandbox()" class="text-[11px] text-slate-400 hover:text-slate-200">Clear</button>
+                    </div>
+                    <textarea id="paste-tester" rows="3" placeholder="Click here and press Paste (Ctrl+V) to test if your copied text looks right..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-300 focus:outline-none focus:border-blue-500/50 resize-none transition"></textarea>
+                    <p id="test-feedback" class="text-[11px] text-slate-500 mt-1 italic">If emojis (🟨, 🟩, 🟥) and indents show up here, your copy worked perfectly!</p>
+                </div>
+            </div>
+
+            <!-- Pro Tip Box -->
+            <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 text-xs text-amber-200/90 flex items-start gap-2.5">
+                <i class="fa-solid fa-lightbulb text-amber-400 text-sm mt-0.5"></i>
+                <div>
+                    <span class="font-bold text-amber-300">Classroom Tip:</span>
+                    <span>If the pasted list ends up indented too far right in Dynalist, press <strong>Shift + Tab</strong> on the top line to move the whole block left!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: Live Master Dynalist Document (7 Cols) -->
+        <section class="lg:col-span-7 flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden min-h-[500px]">
+            
+            <!-- Header bar for the viewer -->
+            <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                    <span class="text-xs font-mono text-slate-400 ml-2 truncate max-w-[200px] sm:max-w-xs">dynalist.io/d/f1AWORn0Hx3YQTTonS9xmlgz</span>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button onclick="reloadIframe()" class="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" title="Reload View">
+                        <i class="fa-solid fa-rotate-right text-xs"></i>
+                    </button>
+                    <a href="https://dynalist.io/d/f1AWORn0Hx3YQTTonS9xmlgz" target="_blank" rel="noopener" class="text-xs font-semibold bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-lg border border-blue-500/30 transition flex items-center gap-1.5">
+                        <span>Open Full Screen</span>
+                        <i class="fa-solid fa-external-link text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Frame Container -->
+            <div class="relative flex-1 w-full bg-slate-950 flex flex-col">
+                <!-- IFrame -->
+                <iframe id="dynalist-frame" src="https://dynalist.io/d/f1AWORn0Hx3YQTTonS9xmlgz" class="w-full flex-1 border-0 min-h-[550px]" title="Classifying Matter Master Notes"></iframe>
+                
+                <!-- Fallback Banner in case iframe is blocked by browser policies -->
+                <div id="iframe-fallback-banner" class="hidden absolute inset-0 bg-slate-950/95 flex flex-col items-center justify-center p-6 text-center z-10">
+                    <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center text-xl mb-3 border border-amber-500/20">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1">Embedded Preview Blocked</h3>
+                    <p class="text-xs text-slate-400 max-w-sm mb-4 leading-relaxed">Your school browser security settings may restrict embedding live Dynalist pages directly in frames.</p>
+                    <a href="https://dynalist.io/d/f1AWORn0Hx3YQTTonS9xmlgz" target="_blank" rel="noopener" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center gap-2">
+                        <span>Open Master Notes in New Tab</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-slate-950 px-4 py-2.5 border-t border-slate-800 text-[11px] text-slate-500 flex justify-between items-center">
+                <span>Master Reference View</span>
+                <span>Dynalist Format Version 2.4</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Hidden Raw Indented Notes Text for Clipboard Copying -->
+    <textarea id="hidden-notes-text" class="sr-only" aria-hidden="true">Classifying Matter: Identification Flow Chart
+	🟨 START: What are you looking at?
+		Molecular-scale diagram (atoms/molecules)
+		Macro-scale image (photograph/real sample)
+		Chemical formula or substance name
+	🟨 STEP 1: Is there only ONE type of atom present?
+		🟩 YES → ELEMENT (Pure Substance)
+			Made of only one kind of atom.
+			Atoms can be single (He, Fe) or bonded with the SAME element (O₂, N₂).
+			🛑 STOP.
+		🟥 NO → Continue to Step 2.
+	🟨 STEP 2: Are two or more DIFFERENT elements chemically bonded together in a fixed ratio?
+		🟩 YES → PURE COMPOUND (Pure Substance)
+			Every molecule/particle has the exact same combination of different atoms (e.g., H₂O, CO₂, NaCl).
+			🛑 STOP.
+		🟥 NO → Continue to Step 3.
+	🟨 STEP 3: Are there two or more different substances physically combined?
+		🟩 YES → MIXTURE (Continue to Step 4)
+		🟥 NO → Recheck Steps 1 & 2. All matter is either a pure substance or a mixture!
+	🟨 STEP 4: Is the mixture uniform (looks completely the same throughout)?
+		🟩 YES → HOMOGENEOUS MIXTURE (Continue to Step 5)
+		🟥 NO → HETEROGENEOUS MIXTURE (Continue to Step 5)
+	🟨 STEP 5: What type of mixture is it?
+		If Homogeneous: Do particles scatter light (Tyndall Effect)?
+			🟥 NO → Solution (e.g., Salt water, air, brass) 🛑 STOP.
+			🟩 YES → Colloid (e.g., Milk, fog, mayonnaise) 🛑 STOP.
+		If Heterogeneous: Do particles settle out over time or separate by filtering?
+			🟩 YES → Suspension (e.g., Muddy water, Italian dressing) 🛑 STOP.
+			🟥 NO → Mechanical Mixture (e.g., Trail mix, granite, salad) 🛑 STOP.
+
+🟦 Quick Summary Rules
+	🟣 Pure Substances = Elements & Compounds (Fixed composition, cannot be separated physically).
+	🟣 Mixtures = Solutions, Colloids, Suspensions, Mechanical Mixtures (Variable composition, separated physically).</textarea>
+
+    <!-- Mobile Help Modal -->
+    <div id="helpModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-blue-400"></i>
+                <span>Classroom Quick Guide</span>
+            </h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+                This page helps you safely transfer your 8th grade science notes into your individual Dynalist journal without losing tab structure or color highlights.
+            </p>
+            <ol class="text-xs text-slate-400 space-y-2 mb-5 list-decimal pl-4">
+                <li>Tap <strong>Copy Notes to Clipboard</strong>.</li>
+                <li>Switch to your Dynalist tab.</li>
+                <li>Tap an empty bullet line and select <strong>Paste</strong>.</li>
+            </ol>
+            <button onclick="toggleInstructionsModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs py-2.5 rounded-xl transition">Got it!</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // OS Detection & Keyboard Shortcut Customization
+        document.addEventListener('DOMContentLoaded', function() {
+            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.userAgent.includes("Macintosh");
+            const osBadge = document.getElementById('os-badge');
+            const pasteShortcutKey = document.getElementById('paste-shortcut-key');
+            const kbdDisplay = document.getElementById('kbd-shortcut-display');
+
+            if (isMac) {
+                osBadge.textContent = "Mac OS Detected";
+                pasteShortcutKey.textContent = "Cmd + V";
+                kbdDisplay.textContent = "Cmd + V";
+            } else {
+                osBadge.textContent = "Chromebook / Windows Detected";
+                pasteShortcutKey.textContent = "Ctrl + V";
+                kbdDisplay.textContent = "Ctrl + V";
+            }
+
+            // Test box detection listener
+            const testArea = document.getElementById('paste-tester');
+            testArea.addEventListener('input', function() {
+                const feedback = document.getElementById('test-feedback');
+                if (this.value.trim().length > 0) {
+                    feedback.textContent = "🎉 Great job! The notes pasted with tabs intact. Now paste them into your real Dynalist journal!";
+                    feedback.className = "text-[11px] text-emerald-400 font-medium mt-1";
+                } else {
+                    feedback.textContent = "If emojis (🟨, 🟩, 🟥) and indents show up here, your copy worked perfectly!";
+                    feedback.className = "text-[11px] text-slate-500 mt-1 italic";
+                }
+            });
+        });
+
+        // Copy Notes using robust fallback (execCommand) for iframe iframe environments
+        function copyNotesToClipboard() {
+            const textToCopy = document.getElementById('hidden-notes-text').value;
+            let copySuccess = false;
+
+            // Preferred Modern Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    handleCopySuccess();
+                }).catch(err => {
+                    fallbackCopyExecCommand(textToCopy);
+                });
+            } else {
+                // Fallback for iframe restrictions or older browsers
+                fallbackCopyExecCommand(textToCopy);
+            }
+        }
+
+        function fallbackCopyExecCommand(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.top = "0";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    handleCopySuccess();
+                } else {
+                    showManualCopyAlert();
+                }
+            } catch (err) {
+                showManualCopyAlert();
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        function handleCopySuccess() {
+            const msg = document.getElementById('copySuccessMsg');
+            const btn = document.getElementById('copyBtn');
+            const step1 = document.getElementById('step-card-1');
+            const step2 = document.getElementById('step-card-2');
+            const step3 = document.getElementById('step-card-3');
+
+            // Show Toast
+            msg.classList.remove('hidden');
+
+            // Button Feedback State
+            btn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+            btn.innerHTML = '<i class="fa-solid fa-check text-lg"></i><span>Copied to Clipboard!</span>';
+
+            // Highlight Step progression
+            step1.className = "flex gap-3.5 p-3 rounded-xl border border-emerald-500/30 bg-emerald-950/20 transition-all";
+            step2.className = "flex gap-3.5 p-3 rounded-xl border border-amber-500/40 bg-amber-950/20 transition-all pulse-subtle";
+
+            // Optional subtle Audio Feedback
+            playSuccessChime();
+
+            // Reset Button after 4 seconds
+            setTimeout(() => {
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+                btn.innerHTML = '<i class="fa-regular fa-copy text-lg group-hover:scale-110 transition-transform"></i><span>Copy Notes to Clipboard</span>';
+            }, 4000);
+        }
+
+        function showManualCopyAlert() {
+            const hiddenText = document.getElementById('hidden-notes-text');
+            hiddenText.classList.remove('sr-only');
+            hiddenText.classList.add('w-full', 'h-32', 'p-2', 'bg-slate-900', 'text-xs', 'mt-2', 'rounded');
+            hiddenText.select();
+            alert("Clipboard access was restricted. The notes are highlighted in the box below—press Ctrl+C to copy!");
+        }
+
+        // Web Audio API Pleasant Notification Sound
+        function playSuccessChime() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
+                
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } catch (e) {
+                // Ignore audio context errors if browser blocks autoplay audio
+            }
+        }
+
+        function clearTestSandbox() {
+            const textarea = document.getElementById('paste-tester');
+            textarea.value = '';
+            document.getElementById('test-feedback').textContent = "If emojis (🟨, 🟩, 🟥) and indents show up here, your copy worked perfectly!";
+            document.getElementById('test-feedback').className = "text-[11px] text-slate-500 mt-1 italic";
+        }
+
+        function reloadIframe() {
+            const frame = document.getElementById('dynalist-frame');
+            frame.src = frame.src;
+        }
+
+        function toggleInstructionsModal() {
+            const modal = document.getElementById('helpModal');
+            modal.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
